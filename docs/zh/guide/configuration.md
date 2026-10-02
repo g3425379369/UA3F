@@ -83,6 +83,8 @@ user-agent-partial-replace: false
 
 规则配置仅在 `rewrite-mode: RULE` 时使用。YAML 适合长期维护；命令行参数和环境变量接收 JSON 字符串，适合自动化注入。
 
+YAML 和 JSON 规则均默认启用，设置 `enabled: false` 可禁用规则。
+
 ```yaml
 rewrite-mode: RULE
 
@@ -163,7 +165,7 @@ l3-rewrite:
 | 功能 | 推荐 YAML | 兼容 YAML | 命令行参数 | 环境变量 | 默认值 |
 | --- | --- | --- | --- | --- | --- |
 | TTL 重写 | `l3-rewrite.ttl` | `ttl` | `--ttl`, `--l3-rewrite-ttl` | `UA3F_L3_REWRITE_TTL`, `UA3F_TTL` | `false` |
-| TTL 目标值 | `l3-rewrite.ttl-value` | - | `--ttl-value` | `UA3F_L3_REWRITE_TTL_VALUE` | `64` |
+| TTL 目标值 | `l3-rewrite.ttl-value` | - | `--l3-rewrite-ttl-value` | `UA3F_L3_REWRITE_TTL_VALUE` | `64` |
 | IPID 重写 | `l3-rewrite.ipid` | `ipid` | `--ipid`, `--l3-rewrite-ipid` | `UA3F_L3_REWRITE_IPID`, `UA3F_IPID` | `false` |
 | 删除 TCP Timestamp | `l3-rewrite.tcpts` | `tcp_timestamp` | `--tcpts`, `--l3-rewrite-tcpts` | `UA3F_L3_REWRITE_TCPTS`, `UA3F_TCPTS` | `false` |
 | 修改 TCP 初始窗口 | `l3-rewrite.tcpwin` | `tcp_initial_window` | `--tcpwin`, `--l3-rewrite-tcpwin` | `UA3F_L3_REWRITE_TCPWIN`, `UA3F_TCP_INIT_WINDOW` | `false` |
@@ -171,6 +173,8 @@ l3-rewrite:
 | L3 eBPF 加速 | `l3-rewrite.bpf-offload` | - | `--l3-rewrite-bpf-offload` | `UA3F_L3_REWRITE_BPF_OFFLOAD` | `false` |
 
 L3 eBPF 加速要求 Linux 内核 `>= 5.15`。详见 [L3 重写](/zh/l3/overview.md) 与 [eBPF 加速](/zh/ebpf/l3-rewrite.md)。
+
+netfilter 路径开启软件流量卸载时，`ttl-value: 255` 的卸载转发包实际出站 TTL 为 `254`。详见 [TTL 重写限制](/zh/l3/ttl.md)。
 
 ## Desync
 
